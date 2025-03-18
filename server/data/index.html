@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Svet system</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <main>
+            <div id="data"></div>
+            
+            <div class="timer-container">
+                <h1 id="timer">00:00:0000</h1>
+            </div>
+
+            <div class="controls">
+                <button onclick="start()" id="startBtn">Старт</button>
+                <button onclick="startnotimer()" id="startnotimerBtn">Старт без таймера</button>
+                <button onclick="stop()" id="stopBtn">Стоп</button>
+            </div>
+        </main>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
