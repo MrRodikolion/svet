@@ -31,7 +31,8 @@
 <text x="886" y="530" fill="#cbd8e9" font-family="sans-serif" font-size="16">R13 · Y12 · G14</text>
 <rect x="430" y="470" width="340" height="110" rx="15" fill="#203149" stroke="#6c8aaa"/>
 <text x="446" y="502" fill="white" font-family="sans-serif" font-size="20">UART-получатель</text>
-<text x="446" y="535" fill="#cbd8e9" font-family="sans-serif" font-size="16">Коды 0…4 · модель не задана</text>
+<text x="446" y="535" fill="#cbd8e9" font-family="sans-serif" font-size="16">Сервер: 0x00 / 0x02</text>
+<text x="446" y="562" fill="#cbd8e9" font-family="sans-serif" font-size="14">Модель получателя не задана</text>
 <text x="40" y="650" fill="#cbd8e9" font-family="sans-serif" font-size="17">Адреса клиентов взяты из server. DHCP не гарантирует их: настройка адресации не завершена.</text>
 <text x="40" y="677" fill="#cbd8e9" font-family="sans-serif" font-size="17">Подписи GPIO — номера ESP8266, не Dx на плате. Это логическая схема, не монтажный чертёж.</text>
 <text x="40" y="704" fill="#cbd8e9" font-family="sans-serif" font-size="17">Питание, резисторы/драйверы ламп и электрические уровни не определены исходниками.</text>
