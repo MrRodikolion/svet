@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "ESP8266WiFi.h"
 #include "ESPAsyncWebServer.h"
-#include <esp8266httpclient.h>
+#include <ESP8266HTTPClient.h>
 #include <Wire.h>
 
 const char *ssid = "ESP32-Access-Point";
@@ -19,8 +19,9 @@ const String colors[] = {"r", "ry", "g", "mg", "y"};
 const int tsleep[] = {5, 2, 7, 2, 3};
 const byte sendcode[] = {0x00, 0x01, 0x02, 0x03, 0x04};
 static int s = 2;
-static int t = millis();
+static uint32_t t = millis();
 char todo = 'g';
+bool has_command = false;
 
 AsyncWebServer server(80);
 void Server()
@@ -28,22 +29,42 @@ void Server()
   server.on(
       "/post",
       HTTP_POST,
-      [](AsyncWebServerRequest *request) {},
+      [](AsyncWebServerRequest *request) {
+        if (request->contentLength() == 0)
+        {
+          request->send(400, "text/plain", "Expected one command byte");
+        }
+      },
       NULL,
       [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total)
       {
-        todo = data[0];
-        switch (todo)
+        if (index != 0)
         {
-        case 'r':
-          s = 4;
-          break;
-        case 'g':
-          s = 1;
-          break;
-
-        default:
-          break;
+          return;
+        }
+        if (total != 1 || len != 1 || (data[0] != 's' && data[0] != 'r' && data[0] != 'g'))
+        {
+          request->send(400, "text/plain", "Expected s, r or g");
+          return;
+        }
+        const char command = static_cast<char>(data[0]);
+        if (!has_command || todo != command)
+        {
+          has_command = true;
+          todo = command;
+          t = millis();
+          switch (todo)
+          {
+          case 'r':
+            s = 4;
+            break;
+          case 'g':
+            s = 1;
+            break;
+          default:
+            s = 0;
+            break;
+          }
         }
 
         request->send(200);

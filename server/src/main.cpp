@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "ESP8266WiFi.h"
 #include "ESPAsyncWebServer.h"
-#include <esp8266httpclient.h>
+#include <ESP8266HTTPClient.h>
 #include <ESPAsyncTCP.h>
 #include <LittleFS.h>
 
@@ -21,6 +21,9 @@ static int s = 0;
 static int t = millis() + tsleep[s] * 1000 + 1;
 char todo = 's';
 bool isupdated = false;
+uint32_t last_update_attempt = 0;
+bool update_attempted = false;
+uint32_t command_revision = 0;
 
 AsyncWebServer server(80);
 void Server()
@@ -63,6 +66,8 @@ void Server()
               {
                   todo = 's';
                   isupdated = false;
+                  update_attempted = false;
+                  ++command_revision;
                   //   WiFiClient client;
                   //   HTTPClient http;
 
@@ -78,6 +83,8 @@ void Server()
               {
                   todo = 'g';
                   isupdated = false;
+                  update_attempted = false;
+                  ++command_revision;
                   //   WiFiClient client;
                   //   HTTPClient http;
 
@@ -134,6 +141,38 @@ void dumpClients()
         Serial.print("\r\n");
         stat_info = STAILQ_NEXT(stat_info, next);
     }
+    wifi_softap_free_station_info();
+}
+
+bool sendCommand(const char *url, const char *command)
+{
+    WiFiClient client;
+    HTTPClient http;
+    http.setTimeout(1000);
+    if (!http.begin(client, url))
+    {
+        return false;
+    }
+    http.addHeader("Content-Type", "text/plain");
+    const int status = http.POST(command);
+    http.end();
+    return status >= 200 && status < 300;
+}
+
+void updateClients(const char *first, const char *second)
+{
+    const uint32_t now = millis();
+    if (update_attempted && now - last_update_attempt < 1000)
+    {
+        return;
+    }
+    update_attempted = true;
+    last_update_attempt = now;
+    const uint32_t requested_revision = command_revision;
+    const bool first_ok = sendCommand(SlaveServerName1, first);
+    const bool second_ok = sendCommand(SlaveServerName2, second);
+    // A new request received while sending must not be marked delivered.
+    isupdated = command_revision == requested_revision && first_ok && second_ok;
 }
 
 void loop()
@@ -154,24 +193,7 @@ void loop()
         digitalWrite(gpin, LOW);
         if (!isupdated)
         {
-            WiFiClient client;
-            HTTPClient http;
-
-            http.begin(client, SlaveServerName1);
-
-            http.addHeader("Content-Type", "text/plain");
-            http.POST("s");
-            http.end();
-
-            WiFiClient client1;
-            HTTPClient http1;
-
-            http1.begin(client1, SlaveServerName2);
-
-            http1.addHeader("Content-Type", "text/plain");
-            http1.POST("s");
-            http1.end();
-            isupdated = true;
+            updateClients("s", "s");
         }
         break;
     case 'g':
@@ -181,24 +203,7 @@ void loop()
         digitalWrite(gpin, HIGH);
         if (!isupdated)
         {
-            WiFiClient client;
-            HTTPClient http;
-
-            http.begin(client, SlaveServerName1);
-
-            http.addHeader("Content-Type", "text/plain");
-            http.POST("r");
-            http.end();
-
-            WiFiClient client1;
-            HTTPClient http1;
-
-            http1.begin(client1, SlaveServerName2);
-
-            http1.addHeader("Content-Type", "text/plain");
-            http1.POST("g");
-            http1.end();
-            isupdated = true;
+            updateClients("r", "g");
         }
         break;
 

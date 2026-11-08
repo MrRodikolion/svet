@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img">
+<title>svet · сеть учебных светофоров</title>
+<rect width="1200" height="760" fill="#101827"/>
+<text x="40" y="60" fill="white" font-family="sans-serif" font-size="30">svet · сеть учебных светофоров</text>
+<path d="M310 250L430 250" stroke="#51a5e8" stroke-width="3"/>
+<text x="370" y="240" text-anchor="middle" fill="#9ed4ff" font-family="sans-serif" font-size="16">HTTP</text>
+<path d="M770 220L870 220" stroke="#51a5e8" stroke-width="3"/>
+<text x="820" y="210" text-anchor="middle" fill="#9ed4ff" font-family="sans-serif" font-size="16">WiFi</text>
+<path d="M770 340L870 450" stroke="#51a5e8" stroke-width="3"/>
+<text x="820" y="385" text-anchor="middle" fill="#9ed4ff" font-family="sans-serif" font-size="16">WiFi</text>
+<path d="M600 360L600 470" stroke="#51a5e8" stroke-width="3"/>
+<text x="600" y="405" text-anchor="middle" fill="#9ed4ff" font-family="sans-serif" font-size="16">115200</text>
+<rect x="40" y="190" width="270" height="130" rx="15" fill="#203149" stroke="#6c8aaa"/>
+<text x="56" y="222" fill="white" font-family="sans-serif" font-size="20">Браузер оператора</text>
+<text x="56" y="255" fill="#cbd8e9" font-family="sans-serif" font-size="16">GET /start · GET /stop</text>
+<text x="56" y="280" fill="#cbd8e9" font-family="sans-serif" font-size="16">UI в LittleFS</text>
+<rect x="430" y="160" width="340" height="200" rx="15" fill="#203149" stroke="#6c8aaa"/>
+<text x="446" y="192" fill="white" font-family="sans-serif" font-size="20">D1 Mini: server</text>
+<text x="446" y="225" fill="#cbd8e9" font-family="sans-serif" font-size="16">WiFi AP · HTTP порт 80</text>
+<text x="446" y="250" fill="#cbd8e9" font-family="sans-serif" font-size="16">R GPIO13 · Y GPIO12 · G GPIO14</text>
+<text x="446" y="275" fill="#cbd8e9" font-family="sans-serif" font-size="16">Serial: 115200 бод</text>
+<rect x="870" y="135" width="290" height="150" rx="15" fill="#203149" stroke="#6c8aaa"/>
+<text x="886" y="167" fill="white" font-family="sans-serif" font-size="20">D1 Mini: client №1</text>
+<text x="886" y="200" fill="#cbd8e9" font-family="sans-serif" font-size="16">POST /post: s / r / g</text>
+<text x="886" y="225" fill="#cbd8e9" font-family="sans-serif" font-size="16">Ожидается 192.168.4.2</text>
+<text x="886" y="250" fill="#cbd8e9" font-family="sans-serif" font-size="16">R13 · Y12 · G14</text>
+<rect x="870" y="415" width="290" height="150" rx="15" fill="#203149" stroke="#6c8aaa"/>
+<text x="886" y="447" fill="white" font-family="sans-serif" font-size="20">D1 Mini: client №2</text>
+<text x="886" y="480" fill="#cbd8e9" font-family="sans-serif" font-size="16">Та же прошивка client/</text>
+<text x="886" y="505" fill="#cbd8e9" font-family="sans-serif" font-size="16">Ожидается 192.168.4.3</text>
+<text x="886" y="530" fill="#cbd8e9" font-family="sans-serif" font-size="16">R13 · Y12 · G14</text>
+<rect x="430" y="470" width="340" height="110" rx="15" fill="#203149" stroke="#6c8aaa"/>
+<text x="446" y="502" fill="white" font-family="sans-serif" font-size="20">UART-получатель</text>
+<text x="446" y="535" fill="#cbd8e9" font-family="sans-serif" font-size="16">Коды 0…4 · модель не задана</text>
+<text x="40" y="650" fill="#cbd8e9" font-family="sans-serif" font-size="17">Адреса клиентов взяты из server. DHCP не гарантирует их: настройка адресации не завершена.</text>
+<text x="40" y="677" fill="#cbd8e9" font-family="sans-serif" font-size="17">Подписи GPIO — номера ESP8266, не Dx на плате. Это логическая схема, не монтажный чертёж.</text>
+<text x="40" y="704" fill="#cbd8e9" font-family="sans-serif" font-size="17">Питание, резисторы/драйверы ламп и электрические уровни не определены исходниками.</text>
+</svg>
